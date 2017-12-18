@@ -1,6 +1,6 @@
 {
   "name": "moldersmedia/lightspeedapi",
-  "description": "Provides a Log Viewer for Laravel 5",
+  "description": "Provides a connection between your platform and the Lightspeed API",
   "license": "MIT",
   "require": {
     "php": ">=7.1.0"
