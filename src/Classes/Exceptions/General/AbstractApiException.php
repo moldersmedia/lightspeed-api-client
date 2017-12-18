@@ -17,17 +17,24 @@ abstract class AbstractApiException extends \Exception
     private $payload;
 
     /**
+     * @var
+     */
+    private $guzzleException;
+
+    /**
      * AbstractApiException constructor.
      *
      * @param string $message
      * @param array  $payload
      * @param string $resource
+     * @param        $guzzleException
      */
-    public function __construct( $message, $payload, $resource )
+    public function __construct( $message, $payload, $resource, $guzzleException )
     {
-        $this->resource = $resource;
-        $this->message  = $message;
-        $this->payload  = $payload;
+        $this->resource        = $resource;
+        $this->message         = $message;
+        $this->payload         = $payload;
+        $this->guzzleException = $guzzleException;
     }
 
     /**
@@ -36,5 +43,10 @@ abstract class AbstractApiException extends \Exception
     public function getResource()
     {
         return $this->resource;
+    }
+
+    public function getGuzzleResponse()
+    {
+        return $this->guzzleException;
     }
 }

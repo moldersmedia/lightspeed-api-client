@@ -9,7 +9,7 @@
     use MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException;
     use MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException;
     use MoldersMedia\LightspeedApi\Traits\ResourcesTrait;
-
+    use Psr\Http\Message\ResponseInterface;
 
     /**
      * Class ApiClient
@@ -38,6 +38,9 @@
 
         const SERVER_US1_LIVE = 'https://api.shoplightspeed.com/';
 
+        /**
+         * Errors thrown by the API
+         */
         const ERRORS_TOO_MANY_REQUESTS = 'Too many requests in this time period. Try again later.';
 
         CONST ERROR_INVALID_DATA_INPUT = 'Invalid data input.';
@@ -78,20 +81,20 @@
         public $apiCallsMade = 0;
 
         /**
+         * @param string $apiServer   The api server to use test / live
          * @param string $apiKey      The api key
          * @param string $apiSecret   The api secret
          * @param string $apiLanguage The language to use the api in
-         * @param string $apiServer   The api server to use test / live
-         *
-         * @throws ApiClientException
+         * @param array  $config
+         * @throws \Exception
          */
-        public function __construct( $apiServer, $apiKey, $apiSecret, $apiLanguage )
+        public function __construct( $apiServer, $apiKey, $apiSecret, $apiLanguage, array $config = [] )
         {
             if (!function_exists( 'curl_init' )) {
-                throw new ApiClientException( 'WebshopappApiClient needs the CURL PHP extension.' );
+                throw new \Exception( 'WebshopappApiClient needs the CURL PHP extension.' );
             }
             if (!function_exists( 'json_decode' )) {
-                throw new ApiClientException( 'WebshopappApiClient needs the JSON PHP extension.' );
+                throw new \Exception( 'WebshopappApiClient needs the JSON PHP extension.' );
             }
 
             $this->setApiServer( $apiServer );
@@ -248,10 +251,10 @@
                 $callsLeft      = $this->extractCallsLeft( $exception->getResponse() );
                 $secondForReset = $this->extractResetTime( $exception->getResponse() );
 
-                $this->handleDefaultExceptions( $error );
+                $this->handleDefaultExceptions( $error, $exception );
 
                 if (!$this->sleepMax) {
-                    $this->throwErrorException( $error['error'], $resource, $secondForReset, $payload );
+                    $this->throwErrorException( $error['error'], $resource, $secondForReset, $payload, $exception );
                 }
 
                 $this->handleDelay( $callsLeft, $secondForReset );
@@ -261,26 +264,28 @@
         }
 
         /**
-         * @param array  $error
-         * @param string $resource
-         * @param        $limitReset
-         * @param array  $payload
-         * @throws ApiClientException|ApiLimitReachedException
+         * @param array                               $error
+         * @param string                              $resource
+         * @param                                     $limitReset
+         * @param array                               $payload
+         * @param \Psr\Http\Message\ResponseInterface $exception
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiClientException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
          */
-        private function throwErrorException( $error, $resource, $limitReset, $payload )
+        private function throwErrorException( $error, $resource, $limitReset, $payload, ResponseInterface $exception )
         {
             if (array_key_exists( 'message', $error )) {
 
                 $message = $error['message'];
 
                 if ($message == self::ERRORS_TOO_MANY_REQUESTS) {
-                    throw new ApiLimitReachedException( $limitReset, $payload, $resource );
+                    throw new ApiLimitReachedException( $limitReset, $payload, $resource, $exception );
                 }
 
-                throw new ApiClientException( $message );
+                throw new ApiClientException( $message, $payload, $resource, $exception );
             }
 
-            throw new ApiClientException( 'Unknown error' );
+            throw new ApiClientException( 'Unknown error', $payload, $resource, $exception );
         }
 
         /**
