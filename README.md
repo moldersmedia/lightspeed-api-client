@@ -25,4 +25,4 @@ The base of the API class is the official API. Replacing this package with the L
 There are currently no code standards.
 
 # License
-This package is free for use. Selling the code is *not* allowed.
+This package is free for use. Selling the code is **not** allowed.
