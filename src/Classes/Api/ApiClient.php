@@ -46,6 +46,13 @@
         CONST ERROR_INVALID_DATA_INPUT = 'Invalid data input.';
 
         /**
+         * The URL of your development location
+         *
+         * @var
+         */
+        protected $localhostUrl;
+
+        /**
          * @var int
          */
         protected $sleepMax = 400;
@@ -81,6 +88,16 @@
         public $apiCallsMade = 0;
 
         /**
+         * @var bool
+         */
+        protected $test = false;
+
+        /**
+         * @var int
+         */
+        protected $testEnvMaxApiLength = 6;
+
+        /**
          * Array with config => property configuration
          * this way we can set now configurable properties quicker
          *
@@ -92,7 +109,10 @@
             'cluster'          => 'apiServer',
             'language'         => 'apiLanguage',
             'user_secret'      => 'apiSecret',
-            'api_key'          => 'apiKey'
+            'api_key'          => 'apiKey',
+            'localhost_url'    => 'localhostUrl',
+            'enable_test'      => 'test',
+            'test_api_limit'   => 'testEnvMaxApiLength'
         ];
 
         /**
@@ -173,11 +193,30 @@
         }
 
         /**
+         * @param string $urlSuffix
+         * @return string
+         */
+        public function getLocalhostUrl( $urlSuffix = '/' )
+        {
+            return $this->localhostUrl . $urlSuffix;
+        }
+
+        /**
+         * @return bool
+         */
+        public function getTestEnv()
+        {
+            return $this->test;
+        }
+
+        /**
          * @return string
          */
         public function getApiHost()
         {
-            if ($this->apiServer == 'live') {
+            if ($this->getTestEnv()) {
+                return $this->getLocalhostUrl();
+            } elseif ($this->apiServer == 'live') {
                 return self::SERVER_HOST_LIVE;
             } elseif ($this->apiServer == 'local') {
                 return self::SERVER_HOST_LOCAL;
@@ -239,7 +278,7 @@
 
             $this->apiCallsMade++;
 
-            if ($responseBody && preg_match( '/^checkout/i', $url ) !== 1) {
+            if ($responseBody && !$this->getTestEnv() && preg_match( '/^checkout/i', $url ) !== 1) {
                 $responseBody = array_shift( $responseBody );
             }
 
@@ -256,20 +295,26 @@
          */
         private function makeRequest( $url, $method, $payload, $resource ): Response
         {
-            $test = $this->makeRequestUrl( $url );
+            $requestUrl = $this->makeRequestUrl( $url );
 
             try {
+
+                if ($this->getTestEnv()) {
+                    $payload['app_key'] = substr( $this->getApiKey(), 0, 6 );
+                }
+
                 $request = ( new Client() )
-                    ->request( $method, $test, [
+                    ->request( $method, $requestUrl, [
                         'auth'        => $this->getCredentials(),
                         'form_params' => $payload,
-                        'query'       => $payload
+                        'query'       => $payload,
                     ] );
 
                 $this->request = $request;
 
                 return $request;
             } catch( ClientException $exception ) {
+
                 $error = json_decode( $exception->getResponse()->getBody()->getContents(), true );
 
                 $callsLeft      = $this->extractCallsLeft( $exception->getResponse() );
@@ -283,7 +328,7 @@
 
                 $this->handleDelay( $callsLeft, $secondForReset );
 
-                return $this->makeRequest( $test, $method, $payload, $resource );
+                return $this->makeRequest( $requestUrl, $method, $payload, $resource );
             }
         }
 
