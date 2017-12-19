@@ -15,10 +15,10 @@ class ApiLimitReachedException extends AbstractApiException
     /**
      * ApiLimitReachedException constructor.
      *
-     * @param string $waitTime
-     * @param array  $payload
-     * @param int    $resource
-     * @param        $guzzleException
+     * @param string                              $waitTime
+     * @param array                               $payload
+     * @param int                                 $resource
+     * @param \Psr\Http\Message\ResponseInterface $guzzleException
      */
     public function __construct( $waitTime, $payload, $resource, $guzzleException )
     {

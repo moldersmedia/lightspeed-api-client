@@ -3,7 +3,8 @@
   "description": "Provides a connection between your platform and the Lightspeed API",
   "license": "MIT",
   "require": {
-    "php": ">=7.1.0"
+    "php": ">=7.1.0",
+    "guzzlehttp/guzzle": "^6.*"
   },
   "autoload": {
     "psr-4": {

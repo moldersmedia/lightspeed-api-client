@@ -5,6 +5,11 @@
  *
  * @package MoldersMedia\LightspeedApi\Classes\Exceptions\General
  */
+/**
+ * Class AbstractApiException
+ *
+ * @package MoldersMedia\LightspeedApi\Classes\Exceptions\General
+ */
 abstract class AbstractApiException extends \Exception
 {
     /**
@@ -45,6 +50,17 @@ abstract class AbstractApiException extends \Exception
         return $this->resource;
     }
 
+    /**
+     * @return array
+     */
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getGuzzleResponse()
     {
         return $this->guzzleException;

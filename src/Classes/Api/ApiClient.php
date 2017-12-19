@@ -8,8 +8,8 @@
     use MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiClientException;
     use MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException;
     use MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException;
+    use MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException;
     use MoldersMedia\LightspeedApi\Traits\ResourcesTrait;
-    use Psr\Http\Message\ResponseInterface;
 
     /**
      * Class ApiClient
@@ -81,6 +81,21 @@
         public $apiCallsMade = 0;
 
         /**
+         * Array with config => property configuration
+         * this way we can set now configurable properties quicker
+         *
+         * @var array
+         */
+        CONST CONFIG = [
+            'max_sleep_time'   => 'sleepMax',
+            'extra_sleep_time' => 'extraSleepTime',
+            'cluster'          => 'apiServer',
+            'language'         => 'apiLanguage',
+            'user_secret'      => 'apiSecret',
+            'api_key'          => 'apiKey'
+        ];
+
+        /**
          * @param string $apiServer   The api server to use test / live
          * @param string $apiKey      The api key
          * @param string $apiSecret   The api secret
@@ -101,7 +116,7 @@
             $this->setApiKey( $apiKey );
             $this->setApiSecret( $apiSecret );
             $this->setApiLanguage( $apiLanguage );
-
+            $this->setConfig( $config );
             $this->registerResources();
         }
 
@@ -176,15 +191,15 @@
         private function checkLoginCredentials()
         {
             if (strlen( $this->getApiSecret() ) !== 32) {
-                throw new ApiClientException( 'API secret should be exact 32 characters.' );
+                throw new InvalidApiCredentialsException( 'API secret should be exact 32 characters.' );
             }
 
             if (strlen( $this->getApiKey() ) !== 32) {
-                throw new ApiClientException( 'API key should be exact 32 characters..' );
+                throw new InvalidApiCredentialsException( 'API key should be exact 32 characters..' );
             }
 
             if (strlen( $this->getApiLanguage() ) !== 2) {
-                throw new ApiClientException( 'Invalid API language. API language should be 2 characters' );
+                throw new InvalidApiCredentialsException( 'Invalid API language. API language should be 2 characters' );
             }
         }
 
@@ -214,6 +229,10 @@
             $this->checkLoginCredentials();
 
             $client = $this->makeRequest( $url, $method, $payload, $resource );
+
+
+            $client->withAddedHeader('X-RateLimit-Limit', '10');
+            dd( __LINE__ . ':[' . __FILE__ . ']' , $client->getHeaders());
 
             $responseBody = json_decode( $client->getBody()->getContents(), true );
 
@@ -251,7 +270,7 @@
                 $callsLeft      = $this->extractCallsLeft( $exception->getResponse() );
                 $secondForReset = $this->extractResetTime( $exception->getResponse() );
 
-                $this->handleDefaultExceptions( $error, $exception );
+                $this->handleDefaultExceptions( $error, $payload, $resource );
 
                 if (!$this->sleepMax) {
                     $this->throwErrorException( $error['error'], $resource, $secondForReset, $payload, $exception );
@@ -264,15 +283,14 @@
         }
 
         /**
-         * @param array                               $error
-         * @param string                              $resource
-         * @param                                     $limitReset
-         * @param array                               $payload
-         * @param \Psr\Http\Message\ResponseInterface $exception
-         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiClientException
-         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @param array                                 $error
+         * @param string                                $resource
+         * @param                                       $limitReset
+         * @param array                                 $payload
+         * @param \GuzzleHttp\Exception\ClientException $exception
+         * @throws ApiClientException|ApiLimitReachedException
          */
-        private function throwErrorException( $error, $resource, $limitReset, $payload, ResponseInterface $exception )
+        private function throwErrorException( $error, $resource, $limitReset, $payload, ClientException $exception )
         {
             if (array_key_exists( 'message', $error )) {
 
@@ -295,8 +313,8 @@
          */
         private function handleDelay( $callsLeft, $resetMinute )
         {
-            if (( $this->sleepMax === 0 ) || ( $callsLeft <= 0 && $resetMinute < $this->sleepMax )) {
-                sleep( $resetMinute + $this->extraSleepTime );
+            if (( $this->getMaxSleepTime() === 0 ) || ( $callsLeft <= 0 && $resetMinute < $this->getMaxSleepTime() )) {
+                sleep( $resetMinute + $this->getExtraSleepTime() );
 
                 return;
             }
@@ -421,12 +439,15 @@
 
         /**
          * @param array $error
-         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiClientException
+         * @param       $payload
+         * @param       $resource
+         * @throws ApiClientException
          */
-        private function handleDefaultExceptions( $error )
+        private function handleDefaultExceptions( $error, $payload, $resource )
         {
             if (@$error['error']['message'] === self::ERROR_INVALID_DATA_INPUT) {
-                throw new ApiClientException( self::ERROR_INVALID_DATA_INPUT . ' Check if the payload is filled' );
+                throw new ApiClientException( self::ERROR_INVALID_DATA_INPUT . ' Check if the payload is filled', [],
+                    $payload, $resource );
             }
         }
 
@@ -450,6 +471,57 @@
             $this->sleepMax = (int) $value;
 
             return $this;
+        }
+
+        /**
+         * @param array $config
+         * @return $this
+         */
+        public function setConfig( array $config )
+        {
+            foreach ($config as $configKey => $value) {
+                if ($this->isValidConfigOption( $configKey )) {
+                    $property = $this->getPropertyByConfigKey( $configKey );
+
+                    $this->{$property} = $value;
+                }
+            }
+
+            return $this;
+        }
+
+        /**
+         * @param $configKey
+         * @return bool
+         */
+        private function isValidConfigOption( $configKey )
+        {
+            return array_key_exists( $configKey, self::CONFIG );
+        }
+
+        /**
+         * @param $configKey
+         * @return mixed
+         */
+        private function getPropertyByConfigKey( $configKey )
+        {
+            return self::CONFIG[$configKey];
+        }
+
+        /**
+         * @return int
+         */
+        public function getMaxSleepTime()
+        {
+            return $this->sleepMax;
+        }
+
+        /**
+         * @return int
+         */
+        public function getExtraSleepTime()
+        {
+            return $this->extraSleepTime;
         }
 
     }
