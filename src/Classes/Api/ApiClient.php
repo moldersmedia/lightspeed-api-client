@@ -96,6 +96,11 @@
         ];
 
         /**
+         * @var \Psr\Http\Message\ResponseInterface
+         */
+        private $request = false;
+
+        /**
          * @param string $apiServer   The api server to use test / live
          * @param string $apiKey      The api key
          * @param string $apiSecret   The api secret
@@ -254,12 +259,16 @@
             $test = $this->makeRequestUrl( $url );
 
             try {
-                return ( new Client() )
+                $request = ( new Client() )
                     ->request( $method, $test, [
                         'auth'        => $this->getCredentials(),
                         'form_params' => $payload,
                         'query'       => $payload
                     ] );
+
+                $this->request = $request;
+
+                return $request;
             } catch( ClientException $exception ) {
                 $error = json_decode( $exception->getResponse()->getBody()->getContents(), true );
 
@@ -518,6 +527,14 @@
         public function getExtraSleepTime()
         {
             return $this->extraSleepTime;
+        }
+
+        /**
+         * @return \Psr\Http\Message\ResponseInterface
+         */
+        public function getRequest()
+        {
+            return $this->request;
         }
 
     }
