@@ -230,10 +230,6 @@
 
             $client = $this->makeRequest( $url, $method, $payload, $resource );
 
-
-            $client->withAddedHeader('X-RateLimit-Limit', '10');
-            dd( __LINE__ . ':[' . __FILE__ . ']' , $client->getHeaders());
-
             $responseBody = json_decode( $client->getBody()->getContents(), true );
 
             $this->apiCallsMade++;
