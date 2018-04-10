@@ -35,7 +35,6 @@
          * @param array $params
          *
          * @return array
-         * @throws ApiClientException
          */
         public function get( $categoryId = null, $params = [] )
         {
@@ -49,8 +48,7 @@
         /**
          * @param array $params
          *
-         * @return int
-         * @throws ApiClientException
+         * @return array
          */
         public function count( $params = [] )
         {
