@@ -83,6 +83,10 @@
          */
         protected $testEnvMaxApiLength = 6;
         /**
+         * @var \Psr\Http\Message\ResponseInterface
+         */
+        protected $request = false;
+        /**
          * @var string
          */
         private $apiServer = null;
@@ -98,10 +102,6 @@
          * @var string
          */
         private $apiLanguage = null;
-        /**
-         * @var \Psr\Http\Message\ResponseInterface
-         */
-        protected $request = false;
 
         /**
          * @param string $apiServer   The api server to use test / live
@@ -301,12 +301,7 @@
                     $payload['app_key'] = substr($this->getApiKey(), 0, 6);
                 }
 
-                $request = (new Client())
-                    ->request($method, $requestUrl, [
-                        'auth'        => $this->getCredentials(),
-                        'form_params' => $payload,
-                        'query'       => $payload,
-                    ]);
+                $request = $this->makeGuzzleRequest();
 
                 $this->request = $request;
 
@@ -376,6 +371,23 @@
         public function getLocalhostUrl($urlSuffix = '/')
         {
             return $this->localhostUrl . $urlSuffix;
+        }
+
+        /**
+         * @param $method
+         * @param $requestUrl
+         * @param $payload
+         * @return mixed|\Psr\Http\Message\ResponseInterface
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         */
+        protected function makeGuzzleRequest($method, $requestUrl, $payload)
+        {
+            return (new Client())
+                ->request($method, $requestUrl, [
+                    'auth'        => $this->getCredentials(),
+                    'form_params' => $payload,
+                    'query'       => $payload,
+                ]);
         }
 
         /**
