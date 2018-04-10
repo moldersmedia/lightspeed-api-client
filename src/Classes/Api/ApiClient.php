@@ -101,7 +101,7 @@
         /**
          * @var \Psr\Http\Message\ResponseInterface
          */
-        private $request = false;
+        protected $request = false;
 
         /**
          * @param string $apiServer   The api server to use test / live
@@ -291,7 +291,7 @@
          * @throws \GuzzleHttp\Exception\GuzzleException
          * @throws SupplierExistsException
          */
-        protected function makeRequest($url, $method, $payload, $resource): Response
+        private function makeRequest($url, $method, $payload, $resource): Response
         {
             $requestUrl = $this->makeRequestUrl($url);
 
@@ -334,7 +334,7 @@
          * @param $resourceUrl
          * @return string
          */
-        private function makeRequestUrl($resourceUrl)
+        protected function makeRequestUrl($resourceUrl)
         {
             $apiHost = $this->getApiHost();
 
@@ -393,7 +393,7 @@
          * @param \Psr\Http\Message\ResponseInterface $responseInterface
          * @return int
          */
-        private function extractCallsLeft($responseInterface)
+        protected function extractCallsLeft($responseInterface)
         {
             return $this->extractFirstParameterFromHeader($responseInterface, 'X-RateLimit-Remaining');
         }
@@ -416,7 +416,7 @@
          * @param \Psr\Http\Message\ResponseInterface $responseInterface
          * @return int
          */
-        private function extractResetTime($responseInterface)
+        protected function extractResetTime($responseInterface)
         {
             return $this->extractFirstParameterFromHeader($responseInterface, 'X-RateLimit-Reset');
         }
@@ -429,7 +429,7 @@
          * @throws ApiClientException
          * @throws SupplierExistsException
          */
-        private function handleDefaultExceptions($callsLeft, $error, $payload, $resource)
+        protected function handleDefaultExceptions($callsLeft, $error, $payload, $resource)
         {
             if (@$error['error']['message'] === self::SUPPLIER_EXISTS_ERROR && $callsLeft) {
                 throw new SupplierExistsException($error['error']['message'], [], $payload, $resource);
@@ -449,7 +449,7 @@
          * @param \GuzzleHttp\Exception\ClientException $exception
          * @throws ApiClientException|ApiLimitReachedException
          */
-        private function throwErrorException($error, $resource, $limitReset, $payload, ClientException $exception)
+        protected function throwErrorException($error, $resource, $limitReset, $payload, ClientException $exception)
         {
             if (array_key_exists('message', $error)) {
 
@@ -470,7 +470,7 @@
          * @param $resetMinute
          * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
          */
-        private function handleDelay($callsLeft, $resetMinute)
+        protected function handleDelay($callsLeft, $resetMinute)
         {
             if (($this->getMaxSleepTime() === 0) || ($callsLeft <= 0 && $resetMinute < $this->getMaxSleepTime())) {
                 sleep($resetMinute + $this->getExtraSleepTime());
@@ -601,5 +601,4 @@
         {
             return $this->request;
         }
-
     }
