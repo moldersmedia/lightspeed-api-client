@@ -291,7 +291,7 @@
          * @throws \GuzzleHttp\Exception\GuzzleException
          * @throws SupplierExistsException
          */
-        private function makeRequest($url, $method, $payload, $resource): Response
+        protected function makeRequest($url, $method, $payload, $resource): Response
         {
             $requestUrl = $this->makeRequestUrl($url);
 
@@ -301,7 +301,7 @@
                     $payload['app_key'] = substr($this->getApiKey(), 0, 6);
                 }
 
-                $request = $this->makeGuzzleRequest();
+                $request = $this->makeGuzzleRequest($method,$requestUrl, $payload);
 
                 $this->request = $request;
 
