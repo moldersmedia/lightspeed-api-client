@@ -12,7 +12,7 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
@@ -22,53 +22,73 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function create( $fields )
+        public function create($fields)
         {
-            $fields = [ 'supplier' => $fields ];
+            $fields = ['supplier' => $fields];
 
-            return $this->client->create( 'suppliers', $fields );
+            return $this->client->create('suppliers', $fields);
         }
 
         /**
-         * @param int   $supplierId
+         * @param int $supplierId
          * @param array $params
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $supplierId = null, $params = [] )
+        public function get($supplierId = null, $params = [])
         {
             if (!$supplierId) {
-                return $this->client->read( 'suppliers', $params );
+                return $this->client->read('suppliers', $params);
             } else {
-                return $this->client->read( 'suppliers/' . $supplierId, $params );
+                return $this->client->read('suppliers/' . $supplierId, $params);
             }
         }
 
         /**
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $params = [] )
+        public function count($params = [])
         {
-            return $this->client->read( 'suppliers/count', $params );
+            return $this->client->read('suppliers/count', $params);
         }
 
         /**
-         * @param int   $supplierId
+         * @param int $supplierId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function update( $supplierId, $fields )
+        public function update($supplierId, $fields)
         {
-            $fields = [ 'supplier' => $fields ];
+            $fields = ['supplier' => $fields];
 
-            return $this->client->update( 'suppliers/' . $supplierId, $fields );
+            return $this->client->update('suppliers/' . $supplierId, $fields);
         }
 
         /**
@@ -76,9 +96,14 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function delete( $supplierId )
+        public function delete($supplierId)
         {
-            return $this->client->delete( 'suppliers/' . $supplierId );
+            return $this->client->delete('suppliers/' . $supplierId);
         }
     }

@@ -12,7 +12,7 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
@@ -22,27 +22,37 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function create( $fields )
+        public function create($fields)
         {
-            $fields = [ 'themeProduct' => $fields ];
+            $fields = ['themeProduct' => $fields];
 
-            return $this->client->create( 'theme/products', $fields );
+            return $this->client->create('theme/products', $fields);
         }
 
         /**
-         * @param int   $productId
+         * @param int $productId
          * @param array $params
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $productId = null, $params = [] )
+        public function get($productId = null, $params = [])
         {
             if (!$productId) {
-                return $this->client->read( 'theme/products', $params );
+                return $this->client->read('theme/products', $params);
             } else {
-                return $this->client->read( 'theme/products/' . $productId, $params );
+                return $this->client->read('theme/products/' . $productId, $params);
             }
         }
 
@@ -51,24 +61,34 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $params = [] )
+        public function count($params = [])
         {
-            return $this->client->read( 'theme/products/count', $params );
+            return $this->client->read('theme/products/count', $params);
         }
 
         /**
-         * @param int   $productId
+         * @param int $productId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function update( $productId, $fields )
+        public function update($productId, $fields)
         {
-            $fields = [ 'themeProduct' => $fields ];
+            $fields = ['themeProduct' => $fields];
 
-            return $this->client->update( 'theme/products/' . $productId, $fields );
+            return $this->client->update('theme/products/' . $productId, $fields);
         }
 
         /**
@@ -76,10 +96,15 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function delete( $productId )
+        public function delete($productId)
         {
-            return $this->client->delete( 'theme/products/' . $productId );
+            return $this->client->delete('theme/products/' . $productId);
         }
     }
 

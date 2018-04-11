@@ -12,7 +12,7 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
@@ -22,39 +22,54 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function create( $fields )
+        public function create($fields)
         {
-            $fields = [ 'groupsCustomer' => $fields ];
+            $fields = ['groupsCustomer' => $fields];
 
-            return $this->client->create( 'groups/customers', $fields );
+            return $this->client->create('groups/customers', $fields);
         }
 
         /**
-         * @param int   $relationId
+         * @param int $relationId
          * @param array $params
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $relationId = null, $params = [] )
+        public function get($relationId = null, $params = [])
         {
             if (!$relationId) {
-                return $this->client->read( 'groups/customers', $params );
+                return $this->client->read('groups/customers', $params);
             } else {
-                return $this->client->read( 'groups/customers/' . $relationId, $params );
+                return $this->client->read('groups/customers/' . $relationId, $params);
             }
         }
 
         /**
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $params = [] )
+        public function count($params = [])
         {
-            return $this->client->read( 'groups/customers/count', $params );
+            return $this->client->read('groups/customers/count', $params);
         }
 
         /**
@@ -62,9 +77,14 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function delete( $relationId )
+        public function delete($relationId)
         {
-            return $this->client->delete( 'groups/customers/' . $relationId );
+            return $this->client->delete('groups/customers/' . $relationId);
         }
     }

@@ -12,7 +12,7 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
@@ -22,53 +22,73 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function create( $fields )
+        public function create($fields)
         {
-            $fields = [ 'redirect' => $fields ];
+            $fields = ['redirect' => $fields];
 
-            return $this->client->create( 'redirects', $fields );
+            return $this->client->create('redirects', $fields);
         }
 
         /**
-         * @param int   $redirectId
+         * @param int $redirectId
          * @param array $params
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $redirectId = null, $params = [] )
+        public function get($redirectId = null, $params = [])
         {
             if (!$redirectId) {
-                return $this->client->read( 'redirects', $params );
+                return $this->client->read('redirects', $params);
             } else {
-                return $this->client->read( 'redirects/' . $redirectId, $params );
+                return $this->client->read('redirects/' . $redirectId, $params);
             }
         }
 
         /**
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $params = [] )
+        public function count($params = [])
         {
-            return $this->client->read( 'redirects/count', $params );
+            return $this->client->read('redirects/count', $params);
         }
 
         /**
-         * @param int   $redirectId
+         * @param int $redirectId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function update( $redirectId, $fields )
+        public function update($redirectId, $fields)
         {
-            $fields = [ 'redirect' => $fields ];
+            $fields = ['redirect' => $fields];
 
-            return $this->client->update( 'redirects/' . $redirectId, $fields );
+            return $this->client->update('redirects/' . $redirectId, $fields);
         }
 
         /**
@@ -76,9 +96,14 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function delete( $redirectId )
+        public function delete($redirectId)
         {
-            return $this->client->delete( 'redirects/' . $redirectId );
+            return $this->client->delete('redirects/' . $redirectId);
         }
     }

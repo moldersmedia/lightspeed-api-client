@@ -12,7 +12,7 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
@@ -22,53 +22,73 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function create( $fields )
+        public function create($fields)
         {
-            $fields = [ 'themeCategory' => $fields ];
+            $fields = ['themeCategory' => $fields];
 
-            return $this->client->create( 'theme/categories', $fields );
+            return $this->client->create('theme/categories', $fields);
         }
 
         /**
-         * @param int   $categoryId
+         * @param int $categoryId
          * @param array $params
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $categoryId = null, $params = [] )
+        public function get($categoryId = null, $params = [])
         {
             if (!$categoryId) {
-                return $this->client->read( 'theme/categories', $params );
+                return $this->client->read('theme/categories', $params);
             } else {
-                return $this->client->read( 'theme/categories/' . $categoryId, $params );
+                return $this->client->read('theme/categories/' . $categoryId, $params);
             }
         }
 
         /**
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $params = [] )
+        public function count($params = [])
         {
-            return $this->client->read( 'theme/categories/count', $params );
+            return $this->client->read('theme/categories/count', $params);
         }
 
         /**
-         * @param int   $categoryId
+         * @param int $categoryId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function update( $categoryId, $fields )
+        public function update($categoryId, $fields)
         {
-            $fields = [ 'themeCategory' => $fields ];
+            $fields = ['themeCategory' => $fields];
 
-            return $this->client->update( 'theme/categories/' . $categoryId, $fields );
+            return $this->client->update('theme/categories/' . $categoryId, $fields);
         }
 
         /**
@@ -76,9 +96,14 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function delete( $categoryId )
+        public function delete($categoryId)
         {
-            return $this->client->delete( 'theme/categories/' . $categoryId );
+            return $this->client->delete('theme/categories/' . $categoryId);
         }
     }

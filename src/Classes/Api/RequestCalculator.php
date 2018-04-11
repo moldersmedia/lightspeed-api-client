@@ -19,7 +19,7 @@ class RequestCalculator
      *
      * @param \Psr\Http\Message\ResponseInterface $response
      */
-    public function __construct( ResponseInterface $response )
+    public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
     }
@@ -29,11 +29,11 @@ class RequestCalculator
      */
     public function getRequestsLeft()
     {
-        $header = $this->response->getHeader( 'X-RateLimit-Remaining' )[0];
+        $header = $this->response->getHeader('X-RateLimit-Remaining')[0];
 
-        [ $minute, $hour, $day ] = explode( '/', $header );
+        [$minute, $hour, $day] = explode('/', $header);
 
-        return compact( 'minute', 'hour', 'day' );
+        return compact('minute', 'hour', 'day');
     }
 
     /**
@@ -41,10 +41,10 @@ class RequestCalculator
      */
     public function getRequestLimits()
     {
-        $header = $this->response->getHeader( 'X-RateLimit-Limit' )[0];
+        $header = $this->response->getHeader('X-RateLimit-Limit')[0];
 
-        [ $minute, $hour, $day ] = explode( '/', $header );
+        [$minute, $hour, $day] = explode('/', $header);
 
-        return compact( 'minute', 'hour', 'day' );
+        return compact('minute', 'hour', 'day');
     }
 }

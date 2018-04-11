@@ -12,67 +12,87 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
 
         /**
-         * @param int   $invoiceId
+         * @param int $invoiceId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function create( $invoiceId, $fields )
+        public function create($invoiceId, $fields)
         {
-            $fields = [ 'invoiceMetafield' => $fields ];
+            $fields = ['invoiceMetafield' => $fields];
 
-            return $this->client->create( 'invoices/' . $invoiceId . '/metafields', $fields );
+            return $this->client->create('invoices/' . $invoiceId . '/metafields', $fields);
         }
 
         /**
-         * @param int   $invoiceId
-         * @param int   $metafieldId
+         * @param int $invoiceId
+         * @param int $metafieldId
          * @param array $params
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $invoiceId, $metafieldId = null, $params = [] )
+        public function get($invoiceId, $metafieldId = null, $params = [])
         {
             if (!$metafieldId) {
-                return $this->client->read( 'invoices/' . $invoiceId . '/metafields', $params );
+                return $this->client->read('invoices/' . $invoiceId . '/metafields', $params);
             } else {
-                return $this->client->read( 'invoices/' . $invoiceId . '/metafields/' . $metafieldId, $params );
+                return $this->client->read('invoices/' . $invoiceId . '/metafields/' . $metafieldId, $params);
             }
         }
 
         /**
-         * @param int   $invoiceId
+         * @param int $invoiceId
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $invoiceId, $params = [] )
+        public function count($invoiceId, $params = [])
         {
-            return $this->client->read( 'invoices/' . $invoiceId . '/metafields/count', $params );
+            return $this->client->read('invoices/' . $invoiceId . '/metafields/count', $params);
         }
 
         /**
-         * @param int   $invoiceId
-         * @param int   $metafieldId
+         * @param int $invoiceId
+         * @param int $metafieldId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function update( $invoiceId, $metafieldId, $fields )
+        public function update($invoiceId, $metafieldId, $fields)
         {
-            $fields = [ 'invoiceMetafield' => $fields ];
+            $fields = ['invoiceMetafield' => $fields];
 
-            return $this->client->update( 'invoices/' . $invoiceId . '/metafields/' . $metafieldId, $fields );
+            return $this->client->update('invoices/' . $invoiceId . '/metafields/' . $metafieldId, $fields);
         }
 
         /**
@@ -81,9 +101,14 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function delete( $invoiceId, $metafieldId )
+        public function delete($invoiceId, $metafieldId)
         {
-            return $this->client->delete( 'invoices/' . $invoiceId . '/metafields/' . $metafieldId );
+            return $this->client->delete('invoices/' . $invoiceId . '/metafields/' . $metafieldId);
         }
     }

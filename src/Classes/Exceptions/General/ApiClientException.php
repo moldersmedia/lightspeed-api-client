@@ -13,12 +13,12 @@
          * ApiClientException constructor.
          *
          * @param string $message
-         * @param array  $payload
+         * @param array $payload
          * @param string $resource
          * @param        $guzzleException
          */
-        public function __construct( $message, $payload, $resource, $guzzleException )
+        public function __construct($message, $payload, $resource, $guzzleException)
         {
-            parent::__construct( $message, $payload, $resource, $guzzleException );
+            parent::__construct($message, $payload, $resource, $guzzleException);
         }
     }

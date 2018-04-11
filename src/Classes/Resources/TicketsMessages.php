@@ -12,67 +12,87 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
 
         /**
-         * @param int   $ticketId
+         * @param int $ticketId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function create( $ticketId, $fields )
+        public function create($ticketId, $fields)
         {
-            $fields = [ 'ticketMessage' => $fields ];
+            $fields = ['ticketMessage' => $fields];
 
-            return $this->client->create( 'tickets/' . $ticketId . '/messages', $fields );
+            return $this->client->create('tickets/' . $ticketId . '/messages', $fields);
         }
 
         /**
-         * @param int   $ticketId
-         * @param int   $messageId
+         * @param int $ticketId
+         * @param int $messageId
          * @param array $params
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $ticketId, $messageId = null, $params = [] )
+        public function get($ticketId, $messageId = null, $params = [])
         {
             if (!$messageId) {
-                return $this->client->read( 'tickets/' . $ticketId . '/messages', $params );
+                return $this->client->read('tickets/' . $ticketId . '/messages', $params);
             } else {
-                return $this->client->read( 'tickets/' . $ticketId . '/messages/' . $messageId, $params );
+                return $this->client->read('tickets/' . $ticketId . '/messages/' . $messageId, $params);
             }
         }
 
         /**
-         * @param int   $ticketId
+         * @param int $ticketId
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $ticketId, $params = [] )
+        public function count($ticketId, $params = [])
         {
-            return $this->client->read( 'tickets/' . $ticketId . '/messages/count', $params );
+            return $this->client->read('tickets/' . $ticketId . '/messages/count', $params);
         }
 
         /**
-         * @param int   $ticketId
-         * @param int   $messageId
+         * @param int $ticketId
+         * @param int $messageId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function update( $ticketId, $messageId, $fields )
+        public function update($ticketId, $messageId, $fields)
         {
-            $fields = [ 'ticketMessage' => $fields ];
+            $fields = ['ticketMessage' => $fields];
 
-            return $this->client->update( 'tickets/' . $ticketId . '/messages/' . $messageId, $fields );
+            return $this->client->update('tickets/' . $ticketId . '/messages/' . $messageId, $fields);
         }
 
         /**
@@ -81,9 +101,14 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function delete( $ticketId, $messageId )
+        public function delete($ticketId, $messageId)
         {
-            return $this->client->delete( 'tickets/' . $ticketId . '/messages/' . $messageId );
+            return $this->client->delete('tickets/' . $ticketId . '/messages/' . $messageId);
         }
     }

@@ -60,6 +60,7 @@
          * @var int
          */
         public $apiCallsMade = 0;
+        protected $perPage = 2;
         /**
          * The URL of your development location
          *
@@ -301,7 +302,7 @@
                     $payload['app_key'] = substr($this->getApiKey(), 0, 6);
                 }
 
-                $request = $this->makeGuzzleRequest($method,$requestUrl, $payload);
+                $request = $this->makeGuzzleRequest($method, $requestUrl, $payload);
 
                 $this->request = $request;
 
@@ -612,5 +613,21 @@
         public function getRequest()
         {
             return $this->request;
+        }
+
+        /**
+         * @return int
+         */
+        public function getPerPage(): int
+        {
+            return $this->perPage;
+        }
+
+        /**
+         * @param int $perPage
+         */
+        public function setPerPage(int $perPage): void
+        {
+            $this->perPage = $perPage;
         }
     }

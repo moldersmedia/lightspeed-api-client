@@ -4,43 +4,71 @@
 
     use MoldersMedia\LightspeedApi\Classes\Api\ApiClient;
     use MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiClientException;
+    use MoldersMedia\LightspeedApi\Traits\ApiHelper;
 
     class Catalog
     {
+        use ApiHelper;
+
         /**
          * @var ApiClient
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
 
         /**
-         * @param int   $productId
          * @param array $params
-         *
-         * @return array
+         * @return int
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $productId = null, $params = [] )
+        public function pages(array $params = [])
         {
-            if (!$productId) {
-                return $this->client->read( 'catalog', $params );
-            } else {
-                return $this->client->read( 'catalog/' . $productId, $params );
-            }
+            return $this->calculatePages($this->count($params));
         }
 
         /**
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $params = [] )
+        public function count($params = [])
         {
-            return $this->client->read( 'catalog/count', $params );
+            return $this->client->read('catalog/count', $params);
+        }
+
+        /**
+         * @param int $productId
+         * @param array $params
+         *
+         * @return array
+         * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
+         */
+        public function get($productId = null, $params = [])
+        {
+            if (!$productId) {
+                return $this->client->read('catalog', $params);
+            } else {
+                return $this->client->read('catalog/' . $productId, $params);
+            }
         }
     }

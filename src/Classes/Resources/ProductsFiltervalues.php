@@ -12,7 +12,7 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
@@ -22,36 +22,51 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $productId )
+        public function get($productId)
         {
-            return $this->client->read( 'products/' . $productId . '/filtervalues' );
+            return $this->client->read('products/' . $productId . '/filtervalues');
         }
 
         /**
-         * @param int   $productId
+         * @param int $productId
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $productId, $params = [] )
+        public function count($productId, $params = [])
         {
-            return $this->client->read( 'products/' . $productId . '/filtervalues/count', $params );
+            return $this->client->read('products/' . $productId . '/filtervalues/count', $params);
         }
 
         /**
-         * @param int   $productId
+         * @param int $productId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function create( $productId, $fields )
+        public function create($productId, $fields)
         {
-            $fields = [ 'productFiltervalue' => $fields ];
+            $fields = ['productFiltervalue' => $fields];
 
-            return $this->client->create( 'products/' . $productId . '/filtervalues', $fields );
+            return $this->client->create('products/' . $productId . '/filtervalues', $fields);
         }
 
         /**
@@ -60,9 +75,14 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function delete( $productId, $filterValueId )
+        public function delete($productId, $filterValueId)
         {
-            return $this->client->delete( 'products/' . $productId . '/filtervalues/' . $filterValueId );
+            return $this->client->delete('products/' . $productId . '/filtervalues/' . $filterValueId);
         }
     }

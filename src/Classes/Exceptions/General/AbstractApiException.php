@@ -30,11 +30,11 @@ abstract class AbstractApiException extends \Exception
      * AbstractApiException constructor.
      *
      * @param string $message
-     * @param array  $payload
+     * @param array $payload
      * @param string $resource
      * @param        $guzzleException
      */
-    public function __construct( $message, $payload, $resource, $guzzleException )
+    public function __construct($message, $payload, $resource, $guzzleException)
     {
         $this->resource        = $resource;
         $this->message         = $message;

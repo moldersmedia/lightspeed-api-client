@@ -12,50 +12,65 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
 
         /**
-         * @param int   $additionalcostId
+         * @param int $additionalcostId
          * @param array $params
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $additionalcostId = null, $params = [] )
+        public function get($additionalcostId = null, $params = [])
         {
             if (!$additionalcostId) {
-                return $this->client->read( 'additionalcosts', $params );
+                return $this->client->read('additionalcosts', $params);
             } else {
-                return $this->client->read( 'additionalcosts/' . $additionalcostId, $params );
+                return $this->client->read('additionalcosts/' . $additionalcostId, $params);
             }
         }
 
         /**
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $params = [] )
+        public function count($params = [])
         {
-            return $this->client->read( 'additionalcosts/count', $params );
+            return $this->client->read('additionalcosts/count', $params);
         }
 
         /**
-         * @param int   $additionalcostId
+         * @param int $additionalcostId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function update( $additionalcostId, $fields )
+        public function update($additionalcostId, $fields)
         {
-            $fields = [ 'additionalCost' => $fields ];
+            $fields = ['additionalCost' => $fields];
 
-            return $this->client->update( 'additionalcosts/' . $additionalcostId, $fields );
+            return $this->client->update('additionalcosts/' . $additionalcostId, $fields);
         }
 
         /**
@@ -63,9 +78,14 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function delete( $additionalcostId )
+        public function delete($additionalcostId)
         {
-            return $this->client->delete( 'additionalcosts/' . $additionalcostId );
+            return $this->client->delete('additionalcosts/' . $additionalcostId);
         }
     }

@@ -12,67 +12,87 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
 
         /**
-         * @param int   $filterId
-         * @param int   $filterValueId
+         * @param int $filterId
+         * @param int $filterValueId
          * @param array $params
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $filterId, $filterValueId = null, $params = [] )
+        public function get($filterId, $filterValueId = null, $params = [])
         {
             if (!$filterValueId) {
-                return $this->client->read( 'filters/' . $filterId . '/values', $params );
+                return $this->client->read('filters/' . $filterId . '/values', $params);
             } else {
-                return $this->client->read( 'filters/' . $filterId . '/values/' . $filterValueId, $params );
+                return $this->client->read('filters/' . $filterId . '/values/' . $filterValueId, $params);
             }
         }
 
         /**
-         * @param int   $filterId
+         * @param int $filterId
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $filterId, $params = [] )
+        public function count($filterId, $params = [])
         {
-            return $this->client->read( 'filters/' . $filterId . '/values/count', $params );
+            return $this->client->read('filters/' . $filterId . '/values/count', $params);
         }
 
         /**
-         * @param int   $filterId
+         * @param int $filterId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function create( $filterId, $fields )
+        public function create($filterId, $fields)
         {
-            $fields = [ 'filterValue' => $fields ];
+            $fields = ['filterValue' => $fields];
 
-            return $this->client->create( 'filters/' . $filterId . '/values', $fields );
+            return $this->client->create('filters/' . $filterId . '/values', $fields);
         }
 
         /**
-         * @param int   $filterId
-         * @param int   $filterValueId
+         * @param int $filterId
+         * @param int $filterValueId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function update( $filterId, $filterValueId, $fields )
+        public function update($filterId, $filterValueId, $fields)
         {
-            $fields = [ 'filterValue' => $fields ];
+            $fields = ['filterValue' => $fields];
 
-            return $this->client->update( 'filters/' . $filterId . '/values/' . $filterValueId, $fields );
+            return $this->client->update('filters/' . $filterId . '/values/' . $filterValueId, $fields);
         }
 
         /**
@@ -81,9 +101,14 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function delete( $filterId, $filterValueId )
+        public function delete($filterId, $filterValueId)
         {
-            return $this->client->delete( 'filters/' . $filterId . '/values/' . $filterValueId );
+            return $this->client->delete('filters/' . $filterId . '/values/' . $filterValueId);
         }
     }

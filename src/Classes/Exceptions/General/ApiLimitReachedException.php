@@ -15,18 +15,18 @@ class ApiLimitReachedException extends AbstractApiException
     /**
      * ApiLimitReachedException constructor.
      *
-     * @param string                              $waitTime
-     * @param array                               $payload
-     * @param int                                 $resource
+     * @param string $waitTime
+     * @param array $payload
+     * @param int $resource
      * @param \Psr\Http\Message\ResponseInterface $guzzleException
      */
-    public function __construct( $waitTime, $payload, $resource, $guzzleException )
+    public function __construct($waitTime, $payload, $resource, $guzzleException)
     {
         $message = 'Too many requests in this time period. Try again in ' . $waitTime . ' seconds';
 
         $this->waitTime = $waitTime;
 
-        parent::__construct( $message, $payload, $resource, $guzzleException );
+        parent::__construct($message, $payload, $resource, $guzzleException);
     }
 
     /**

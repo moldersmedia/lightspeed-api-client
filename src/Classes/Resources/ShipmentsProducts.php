@@ -12,37 +12,47 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
 
         /**
-         * @param int   $shipmentId
-         * @param int   $productId
+         * @param int $shipmentId
+         * @param int $productId
          * @param array $params
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $shipmentId, $productId = null, $params = [] )
+        public function get($shipmentId, $productId = null, $params = [])
         {
             if (!$productId) {
-                return $this->client->read( 'shipments/' . $shipmentId . '/products', $params );
+                return $this->client->read('shipments/' . $shipmentId . '/products', $params);
             } else {
-                return $this->client->read( 'shipments/' . $shipmentId . '/products/' . $productId, $params );
+                return $this->client->read('shipments/' . $shipmentId . '/products/' . $productId, $params);
             }
         }
 
         /**
-         * @param int   $shipmentId
+         * @param int $shipmentId
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $shipmentId, $params = [] )
+        public function count($shipmentId, $params = [])
         {
-            return $this->client->read( 'shipments/' . $shipmentId . '/products/count', $params );
+            return $this->client->read('shipments/' . $shipmentId . '/products/count', $params);
         }
     }

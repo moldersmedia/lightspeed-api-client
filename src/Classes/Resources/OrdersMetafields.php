@@ -12,67 +12,87 @@
          */
         private $client;
 
-        public function __construct( ApiClient $client )
+        public function __construct(ApiClient $client)
         {
             $this->client = $client;
         }
 
         /**
-         * @param int   $orderId
+         * @param int $orderId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function create( $orderId, $fields )
+        public function create($orderId, $fields)
         {
-            $fields = [ 'orderMetafield' => $fields ];
+            $fields = ['orderMetafield' => $fields];
 
-            return $this->client->create( 'orders/' . $orderId . '/metafields', $fields );
+            return $this->client->create('orders/' . $orderId . '/metafields', $fields);
         }
 
         /**
-         * @param int   $orderId
-         * @param int   $metafieldId
+         * @param int $orderId
+         * @param int $metafieldId
          * @param array $params
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function get( $orderId, $metafieldId = null, $params = [] )
+        public function get($orderId, $metafieldId = null, $params = [])
         {
             if (!$metafieldId) {
-                return $this->client->read( 'orders/' . $orderId . '/metafields', $params );
+                return $this->client->read('orders/' . $orderId . '/metafields', $params);
             } else {
-                return $this->client->read( 'orders/' . $orderId . '/metafields/' . $metafieldId, $params );
+                return $this->client->read('orders/' . $orderId . '/metafields/' . $metafieldId, $params);
             }
         }
 
         /**
-         * @param int   $orderId
+         * @param int $orderId
          * @param array $params
          *
-         * @return int
+         * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function count( $orderId, $params = [] )
+        public function count($orderId, $params = [])
         {
-            return $this->client->read( 'orders/' . $orderId . '/metafields/count', $params );
+            return $this->client->read('orders/' . $orderId . '/metafields/count', $params);
         }
 
         /**
-         * @param int   $orderId
-         * @param int   $metafieldId
+         * @param int $orderId
+         * @param int $metafieldId
          * @param array $fields
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function update( $orderId, $metafieldId, $fields )
+        public function update($orderId, $metafieldId, $fields)
         {
-            $fields = [ 'orderMetafield' => $fields ];
+            $fields = ['orderMetafield' => $fields];
 
-            return $this->client->update( 'orders/' . $orderId . '/metafields/' . $metafieldId, $fields );
+            return $this->client->update('orders/' . $orderId . '/metafields/' . $metafieldId, $fields);
         }
 
         /**
@@ -81,9 +101,14 @@
          *
          * @return array
          * @throws ApiClientException
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiLimitReachedException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiSleepTimeException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\General\InvalidApiCredentialsException
+         * @throws \MoldersMedia\LightspeedApi\Classes\Exceptions\Resources\SupplierExistsException
          */
-        public function delete( $orderId, $metafieldId )
+        public function delete($orderId, $metafieldId)
         {
-            return $this->client->delete( 'orders/' . $orderId . '/metafields/' . $metafieldId );
+            return $this->client->delete('orders/' . $orderId . '/metafields/' . $metafieldId);
         }
     }
