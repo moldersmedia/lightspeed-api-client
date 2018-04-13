@@ -9,7 +9,7 @@
     use MoldersMedia\LightspeedApi\Classes\Resources\Account;
     use MoldersMedia\LightspeedApi\Classes\Resources\AccountMetafields;
     use MoldersMedia\LightspeedApi\Classes\Resources\AccountPermissions;
-    use MoldersMedia\LightspeedApi\Classes\Resources\AccountRatelimit;
+    use MoldersMedia\LightspeedApi\Classes\Resources\AccountRateLimit;
     use MoldersMedia\LightspeedApi\Classes\Resources\Additionalcosts;
     use MoldersMedia\LightspeedApi\Classes\Resources\Attributes;
     use MoldersMedia\LightspeedApi\Classes\Resources\Blogs;
@@ -77,7 +77,7 @@
     use MoldersMedia\LightspeedApi\Classes\Resources\Shipments;
     use MoldersMedia\LightspeedApi\Classes\Resources\ShipmentsMetafields;
     use MoldersMedia\LightspeedApi\Classes\Resources\ShipmentsProducts;
-    use MoldersMedia\LightspeedApi\Classes\Resources\Shippingmethods;
+    use MoldersMedia\LightspeedApi\Classes\Resources\ShippingMethods;
     use MoldersMedia\LightspeedApi\Classes\Resources\ShippingmethodsCountries;
     use MoldersMedia\LightspeedApi\Classes\Resources\ShippingmethodsValues;
     use MoldersMedia\LightspeedApi\Classes\Resources\Shop;
@@ -530,8 +530,8 @@
             $this->account                   = new Account($self);
             $this->accountMetafields         = new AccountMetafields($self);
             $this->accountPermissions        = new AccountPermissions($self);
-            $this->accountRatelimit          = new AccountRatelimit($self);
-            $this->additionalcosts           = new Additionalcosts($self);
+            $this->accountRatelimit          = new AccountRateLimit($self);
+            $this->additionalcosts           = new AdditionalCosts($self);
             $this->attributes                = new Attributes($self);
             $this->blogs                     = new Blogs($self);
             $this->blogsArticles             = new BlogsArticles($self);
@@ -559,7 +559,7 @@
             $this->customersTokens           = new CustomersTokens($self);
             $this->dashboard                 = new Dashboard($self);
             $this->deliverydates             = new Deliverydates($self);
-            $this->discountrules             = new Discountrules($self);
+            $this->discountrules             = new DiscountRules($self);
             $this->discounts                 = new Discounts($self);
             $this->events                    = new Events($self);
             $this->external_services         = new ExternalServices($self);
@@ -598,7 +598,7 @@
             $this->shipments                 = new Shipments($self);
             $this->shipmentsMetafields       = new ShipmentsMetafields($self);
             $this->shipmentsProducts         = new ShipmentsProducts($self);
-            $this->shippingmethods           = new Shippingmethods($self);
+            $this->shippingmethods           = new ShippingMethods($self);
             $this->shippingmethodsCountries  = new ShippingmethodsCountries($self);
             $this->shippingmethodsValues     = new ShippingmethodsValues($self);
             $this->shop                      = new Shop($self);

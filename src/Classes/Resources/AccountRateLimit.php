@@ -5,7 +5,7 @@
     use MoldersMedia\LightspeedApi\Classes\Api\ApiClient;
     use MoldersMedia\LightspeedApi\Classes\Exceptions\General\ApiClientException;
 
-    class AccountRatelimit
+    class AccountRateLimit
     {
         /**
          * @var ApiClient
