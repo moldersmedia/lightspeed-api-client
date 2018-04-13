@@ -10,7 +10,7 @@
     use MoldersMedia\LightspeedApi\Classes\Resources\AccountMetafields;
     use MoldersMedia\LightspeedApi\Classes\Resources\AccountPermissions;
     use MoldersMedia\LightspeedApi\Classes\Resources\AccountRateLimit;
-    use MoldersMedia\LightspeedApi\Classes\Resources\Additionalcosts;
+    use MoldersMedia\LightspeedApi\Classes\Resources\AdditionalCosts;
     use MoldersMedia\LightspeedApi\Classes\Resources\Attributes;
     use MoldersMedia\LightspeedApi\Classes\Resources\Blogs;
     use MoldersMedia\LightspeedApi\Classes\Resources\BlogsArticles;
@@ -38,7 +38,7 @@
     use MoldersMedia\LightspeedApi\Classes\Resources\CustomersTokens;
     use MoldersMedia\LightspeedApi\Classes\Resources\Dashboard;
     use MoldersMedia\LightspeedApi\Classes\Resources\Deliverydates;
-    use MoldersMedia\LightspeedApi\Classes\Resources\Discountrules;
+    use MoldersMedia\LightspeedApi\Classes\Resources\DiscountRules;
     use MoldersMedia\LightspeedApi\Classes\Resources\Discounts;
     use MoldersMedia\LightspeedApi\Classes\Resources\Events;
     use MoldersMedia\LightspeedApi\Classes\Resources\ExternalServices;
