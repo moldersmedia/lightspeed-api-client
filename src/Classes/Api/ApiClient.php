@@ -384,17 +384,22 @@
         protected function makeGuzzleRequest($method, $requestUrl, $payload)
         {
             $data = [
-                'auth'        => $this->getCredentials()
+                'auth' => $this->getCredentials()
             ];
 
-            if (strtolower( $method ) == 'post') {
+            if (strtolower($method) == 'post' || strtolower($method) == 'put') {
                 $data['form_params'] = $payload;
             } else {
-                $data['query'] = $payload;
+                $data['query'] = json_encode($payload);
             }
 
-            return ( new Client() )
-                ->request( $method, $requestUrl, $data );
+            return (new Client([
+                'content-type' => 'application/json'
+            ]))
+                ->request($method, $requestUrl, [
+                    'body' => json_encode($payload),
+                    'auth' => $this->getCredentials()
+                ]);
         }
 
         /**
