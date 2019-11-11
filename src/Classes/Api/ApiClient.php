@@ -388,18 +388,16 @@
             ];
 
             if (strtolower($method) == 'post' || strtolower($method) == 'put') {
-                $data['form_params'] = $payload;
+                $data['body'] = json_encode($payload);
             } else {
-                $data['query'] = json_encode($payload);
+                $data['query'] = $payload;
             }
+
 
             return (new Client([
                 'content-type' => 'application/json'
             ]))
-                ->request($method, $requestUrl, [
-                    'body' => json_encode($payload),
-                    'auth' => $this->getCredentials()
-                ]);
+                ->request($method, $requestUrl, $data);
         }
 
         /**
